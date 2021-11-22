@@ -1,20 +1,10 @@
 import {
   ApolloServer
 } from "apollo-server";
-import typeDefs from "./apollo/typeDefs";
-import Query from "./apollo/queries"
-import Mutation from './apollo/mutations'
-import Entity from './apollo/entities'
-
-const resolvers = {
-  ...Entity,
-  Query,
-  Mutation,
-};
+import schema from "./schema";
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers
+  schema
 });
 
 server.listen().then(({

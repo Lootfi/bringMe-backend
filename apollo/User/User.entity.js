@@ -1,4 +1,4 @@
-import prisma from '../prisma'
+import prisma from '../../prisma'
 
 export default {
     User: {
@@ -14,18 +14,5 @@ export default {
                 },
             })
             .documents(),
-    },
-    Document: {
-        id: (parent) => parent.id,
-        name: (parent) => parent.name,
-        createdAt: (parent) => parent.createdAt,
-        user: (parent) =>
-            prisma.document
-            .findUnique({
-                where: {
-                    id: parent.id
-                },
-            })
-            .User(),
     }
 }
