@@ -1,9 +1,6 @@
 import prisma from '../../prisma'
 import bcrypt from 'bcrypt'
-import {
-    transformDocument
-} from '@prisma/client/runtime'
-
+import jwt from 'jsonwebtoken'
 export default {
     Mutation: {
         createAccount: async (_, {
@@ -45,19 +42,19 @@ export default {
                 const user = await prisma.user.findUnique({
                     where: {
                         username
-                    }
+                    },
                 })
                 if (!user) {
-                    throw Error("Username doesn't exist. Please Sign up.")
+                    throw Error("Username doesn't exist.")
                 }
                 const passwordIsCorrect = await bcrypt.compare(password, user.password);
                 if (!passwordIsCorrect) {
                     throw Error("Username or Password incorrect, please try again.");
                 }
-
+                const token = jwt.sign({id: user.id, username: user.username},process.env.PRIVATE_KEY)
                 return {
                     ok: true,
-                    token: "tsuzuku"
+                    token
                 }
 
             } catch (error) {

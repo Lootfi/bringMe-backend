@@ -9,12 +9,10 @@ export default {
         created_at: (parent) => parent.created_at,
         updated_at: (parent) => parent.updated_at,
         documents: (parent) =>
-            prisma.user
-            .findUnique({
+            prisma.user.findUnique({
                 where: {
                     id: parent.id
                 },
-            })
-            .documents(),
+            }).documents(),
     }
 }
