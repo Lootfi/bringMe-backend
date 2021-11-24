@@ -4,11 +4,11 @@ export default {
     Query: {
         users: () => prisma.user.findMany(),
         user: (_, {
-                id
+                username
             }) =>
-            prisma.user.findFirst({
+            prisma.user.findUnique({
                 where: {
-                    id: Number(id)
+                    username
                 },
             })
     }
